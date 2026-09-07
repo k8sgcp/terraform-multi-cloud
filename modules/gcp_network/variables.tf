@@ -9,13 +9,15 @@ variable "region" {
   description = "GCP Region"
 }
 
-variable "env" {
-  type        = string
-  description = "Environment name (e.g., dev, prod)"
+variable "network_name" {
+type          = string
+description   = "Name of VPC network"
 }
 
+
+
 variable "subnet_cidr" {
-  type        = string
-  default     = "10.0.1.0/24"
-  description = "CIDR range for custom subnet"
+type            = string
+default         = "10.0.1.0/24"
+description     = "Primary subnet CIDR range"
 }

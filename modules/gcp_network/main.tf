@@ -1,18 +1,24 @@
 resource "google_compute_network" "vpc_network" {
-  name                    = "${var.env}-vpc-network"
+  name                    = var.network_name
   auto_create_subnetworks = false
+  project                 = var.project_id
 }
 
-resource "google_compute_subnetwork" "custom_subnet" {
-  name          = "${var.env}-subnet"
+
+
+resource "google_compute_subnetwork" "subnet" {
+  name          = "${var.network_name}-subnet"
   ip_cidr_range = var.subnet_cidr
   region        = var.region
   network       = google_compute_network.vpc_network.id
+  project       = var.project_id
 }
 
-resource "google_compute_firewall" "allow_web_ssh" {
-  name    = "${var.env}-allow-web-ssh"
+
+resource "google_compute_firewall" "allow_ssh" {
+  name    = "${var.network_name}-allow-ssh"
   network = google_compute_network.vpc_network.name
+  project = var.project_id
 
   allow {
     protocol = "tcp"
@@ -20,25 +26,4 @@ resource "google_compute_firewall" "allow_web_ssh" {
   }
 
   source_ranges = ["0.0.0.0/0"]
-}
-
-resource "google_compute_instance" "vm_instance" {
-  name         = "${var.env}-app-server"
-  machine_type = "e2-micro"
-  zone         = "${var.region}-a"
-
-  boot_disk {
-    initialize_params {
-      image = "debian-cloud/debian-12"
-    }
-  }
-
-  network_interface {
-    network    = google_compute_network.vpc_network.id
-    subnetwork = google_compute_subnetwork.custom_subnet.id
-
-    access_config {
-      # Ephemeral public IP
-    }
-  }
 }
