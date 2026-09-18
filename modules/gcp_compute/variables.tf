@@ -24,3 +24,8 @@ variable "network_name" {
 variable "subnet_id" {
   type = string
 }
+
+variable "ssh_username" {
+  type    = string
+  default = "ubuntu"
+}
