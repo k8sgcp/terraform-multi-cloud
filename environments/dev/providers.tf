@@ -10,15 +10,15 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~> 3.0"
     }
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
   }
 }
 
-provider "azurerm" {
-  features {}
+provider "aws" {
+  region = var.aws_region
 }
 
-# Keep your existing google provider block here
-provider "google" {
-  project = var.gcp_project_id
-  region  = var.gcp_region
-}
+# (Keep google and azurerm provider blocks)
