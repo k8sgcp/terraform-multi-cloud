@@ -30,3 +30,9 @@ variable "ssh_public_key" {
   type        = string
   description = "SSH public key content for VM login"
 }
+
+
+variable "aws_region" {
+  type    = string
+  default = "us-east-1"
+}
