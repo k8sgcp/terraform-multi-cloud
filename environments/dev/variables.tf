@@ -3,11 +3,6 @@ variable "environment" {
   default = "dev"
 }
 
-variable "azure_location" {
-  type    = string
-  default = "East US"
-}
-
 variable "common_tags" {
   type = map(string)
   default = {
